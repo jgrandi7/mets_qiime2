@@ -1,1 +1,3 @@
-Identify gut microbiome data in METS with Silva and Greengenes taxonomy databases through Qiime2 (R and commandline)
+# METS Gut Microbiome Analysis in Qiime2
+
+Goal: Identify gut microbiome taxonomy in METS with Silva and Greengenes databases through Qiime2 (R and commandline)
