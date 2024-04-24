@@ -53,9 +53,13 @@ wget \
 system('/home/jacob/miniconda3/bin/conda env create -n qiime2 --file /home/jacob/qiime2-2022.2-py38-linux-conda.yml')
 system('/home/jacob/miniconda3/bin/conda activate qiime2')
 
+###code from here on is mixture of command line that can be modified to suit your own use case
+
 /home/wheelerlab3/anaconda2/bin/conda env create -n qiime2 --file /home/jacob/qiime2-2022.2-py38-linux-conda.yml
 
 conda activate qiime2
+
+##main code that identifies species based on classification given in .qza command line and system code form so it can be run in R
 
 qiime feature-classifier classify-sklearn \
 --i-classifier /home/jacob/gg-13-8-99-nb-classifier.qza \
@@ -68,11 +72,19 @@ system("qiime feature-classifier classify-consensus-blast --i-query /home/wheele
 #--o-classification {BLAST-TAXONOMY}.qza \
 #--verbose
 
+#converts qza to qzv to be readable by qiime2view
+
 qiime metadata tabulate --m-input-file /home/jacob/taxonomy.qza --o-visualization /home/jacob/taxonomy.qzv
+
+#merging silva with greengenes taxonomy
 
 qiime rescript merge-taxa --i-data /home/camilla/taxonomy.qza /home/camilla/taxonomy_silva.qza --p-mode score --o-merged-data taxonomy_merged.qza
 
+#repeat of greengenes tabulate code with additional silva taxonomy
+
 qiime metadata tabulate --m-input-file /home/camilla/taxonomy_silva.qza --o-visualization /home/jacob/taxonomy_silva.qzv
+
+#optional: qza to txt for assessing output
 
 iconv -t UTF-8 -f ISO-8859-1 taxonomy_merged.qza > taxonomy_merged.txt
 file -I taxonomy_merged.txt
